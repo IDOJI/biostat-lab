@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><meta name="description" content="ADNI SNP 데이터 설명과 genotype 전처리 문서화 범위" /><title>SNP Data · ADNI Multimodal Data Project</title><link rel="stylesheet" href="../assets/style.css" /><link rel="stylesheet" href="../assets/detail.css" /></head>
+<body class="detail-violet">
+  <a class="skip-link" href="#main">본문으로 바로가기</a>
+  <header class="site-header"><a class="brand" href="../index.html"><span class="brand-mark">A</span><span class="brand-copy"><strong>ADNI Multimodal Data Project</strong><small>Open methods · Reproducible research</small></span></a><button class="menu-button" id="menuButton" type="button" aria-expanded="false" aria-controls="siteNav"><span></span><span></span><span></span><span class="sr-only">메뉴 열기</span></button><nav class="site-nav" id="siteNav"><a href="../index.html#workflows">Workflows</a><a href="../index.html#resources">Resources</a><a class="nav-cta" href="https://github.com/IDOJI/biostat-lab">GitHub</a></nav></header>
+  <main class="detail-main" id="main">
+    <nav class="method-tabs-shell" aria-label="데이터 섹션">
+      <div class="method-tabs">
+        <a href="subject-history.html"><span>01</span><b>Subject History</b></a>
+        <a href="rsfmri-data.html"><span>02</span><b>RS-fMRI Data</b></a>
+        <a class="active" aria-current="page" href="snp-data.html"><span>03</span><b>SNP Data</b></a>
+      </div>
+    </nav>
+    <section class="detail-hero"><nav class="breadcrumbs"><a href="../index.html">Home</a><span>Methods</span><span>SNP Data</span></nav><p class="detail-label">03 · GENETIC DATA</p><div class="detail-hero-grid"><h1>SNP 데이터와<br /><em>전처리</em></h1><div><p class="detail-lead">genotype 파일 구조, sample·variant QC, population structure와 분석용 데이터 생성 과정을 문서화합니다.</p><div class="detail-status"><span>Details in preparation</span><span>No invented thresholds</span></div></div></div></section>
+    <div class="detail-layout">
+      <aside class="detail-toc"><p>이 페이지의 목차</p><a href="#scope">확정된 파이프라인만 공개합니다</a><a href="#sample">개체 수준 품질관리</a><a href="#variant">변이 수준 품질관리</a><a href="#structure">Population structure와 분석 세트</a><a href="#matching">영상 코호트와 연결</a></aside>
+      <div class="detail-content">
+        <section class="detail-section" id="scope"><div class="detail-section-head"><span>01</span><div><p class="detail-label">SCOPE</p><h2>확정된 파이프라인만 공개합니다</h2></div></div><p class="large-copy">현재 페이지는 SNP 전처리에서 문서화할 범위를 제시합니다. 실제 데이터 릴리스, genome build, 도구 버전과 임계값은 파이프라인 확정 후 추가합니다.</p><div class="detail-callout"><span>!</span><div><strong>현재 상태</strong><p>아래 항목은 일반적인 작업 단계이며, 실제 연구에서 사용한 구체적 threshold를 의미하지 않습니다.</p></div></div></section>
+        <section class="detail-section" id="sample"><div class="detail-section-head"><span>02</span><div><p class="detail-label">SAMPLE-LEVEL QC</p><h2>개체 수준 품질관리</h2></div></div><div class="detail-grid"><article class="detail-card"><h3>Missingness</h3><p>sample별 genotype call rate와 과도한 결측을 평가합니다.</p></article><article class="detail-card"><h3>Sex check</h3><p>기록된 성별과 genotype 기반 추정의 불일치를 검토합니다.</p></article><article class="detail-card"><h3>Heterozygosity</h3><p>이형접합도 분포에서 극단적인 sample을 확인합니다.</p></article><article class="detail-card"><h3>Relatedness</h3><p>중복·근연 sample을 식별하고 분석 설계에 맞게 처리합니다.</p></article></div></section>
+        <section class="detail-section" id="variant"><div class="detail-section-head"><span>03</span><div><p class="detail-label">VARIANT-LEVEL QC</p><h2>변이 수준 품질관리</h2></div></div><ul class="detail-list"><li>variant call rate와 결측률 기준을 사전에 고정합니다.</li><li>minor allele frequency 기준과 적용 목적을 기록합니다.</li><li>Hardy–Weinberg equilibrium 검사를 분석 집단에 맞게 적용합니다.</li><li>allele, strand, position과 genome build의 일관성을 확인합니다.</li></ul></section>
+        <section class="detail-section" id="structure"><div class="detail-section-head"><span>04</span><div><p class="detail-label">STRUCTURE & IMPUTATION</p><h2>Population structure와 분석 세트</h2></div></div><ol class="detail-steps"><li><span>01</span><div><b>Ancestry와 principal components</b><p>population structure를 평가하고 분석 공변량 생성 방법을 기록합니다.</p></div></li><li><span>02</span><div><b>Phasing·imputation</b><p>reference panel, 도구와 버전, 품질 기준을 명시합니다.</p></div></li><li><span>03</span><div><b>Post-imputation QC</b><p>imputation quality, MAF와 변이 일치 여부를 재검토합니다.</p></div></li></ol><div class="artifact-box"><span class="overline">TO BE SPECIFIED</span><h3>필수 고정 정보</h3><div class="code-fields"><code>DATA RELEASE</code><code>GENOME BUILD</code><code>SOFTWARE VERSION</code><code>QC THRESHOLDS</code><code>REFERENCE PANEL</code></div></div></section>
+        <section class="detail-section" id="matching"><div class="detail-section-head"><span>05</span><div><p class="detail-label">COHORT LINKAGE</p><h2>영상 코호트와 연결</h2></div></div><p class="large-copy">SNP sample과 영상 subject의 매핑 규칙, 불일치 처리와 최종 교집합을 명확히 기록합니다.</p><div class="detail-grid"><article class="detail-card soft"><h3>Internal mapping</h3><p>민감한 ID 매핑표는 접근 제한 위치에서 관리합니다.</p></article><article class="detail-card soft"><h3>Analysis cohort</h3><p>유전체 QC와 영상 QC를 모두 통과한 subject 교집합을 생성합니다.</p></article></div></section>
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer"><div><a class="brand footer-brand" href="../index.html"><span class="brand-mark">A</span><span class="brand-copy"><strong>ADNI Multimodal Data Project</strong></span></a></div><div class="footer-links"><a class="detail-footer-home" href="../index.html">Home</a><a href="../adni-guide.html">통합 가이드</a><a href="https://github.com/IDOJI/biostat-lab">GitHub</a></div><p class="copyright">© <span id="year"></span> · Updated <span id="updatedDate"></span></p></footer>
+  <script src="../assets/app.js"></script>
+</body>
+</html>

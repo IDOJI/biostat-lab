@@ -1,21 +1,17 @@
-# ADNI Data Selection Guide
+# ADNI Multimodal Data Project
 
 ## 🌐 Website
 
-[**Open the ADNI Data Selection Guide →**](https://idoji.github.io/ADNI-data-selection/)
+[**Open the ADNI Multimodal Data Project →**](https://idoji.github.io/biostat-lab/)
 
-ADNI의 임상 방문 이력, MRI 후보 스캔, QC 정보, T1/rs-fMRI 페어링 및 전처리 절차를 연구실 구성원과 공유하기 위한 정적 웹사이트입니다.
+ADNI의 subject history, RS-fMRI 데이터 선택·다운로드·전처리,
+SNP 전처리 절차를 공유하는 프로젝트 웹사이트입니다.
 
 ## Website structure
 
-- Clinical visit history
-- MRI candidate scans
-- Quality control
-- T1–rs-fMRI pairing
-- Download and integrity checks
-- BIDS organization
-- rs-fMRI and T1 preprocessing
-- Reproducibility and data security
+- [Subject History](https://idoji.github.io/biostat-lab/methods/subject-history.html)
+- [RS-fMRI Data](https://idoji.github.io/biostat-lab/methods/rsfmri-data.html)
+- [SNP Data](https://idoji.github.io/biostat-lab/methods/snp-data.html)
 
 ## Local preview
 
@@ -40,7 +36,7 @@ GitHub 저장소에서 다음 순서로 활성화합니다.
 
 배포 주소:
 
-[https://idoji.github.io/ADNI-data-selection/](https://idoji.github.io/ADNI-data-selection/)
+[https://idoji.github.io/biostat-lab/](https://idoji.github.io/biostat-lab/)
 
 ## Security
 
@@ -53,6 +49,8 @@ GitHub 저장소에서 다음 순서로 활성화합니다.
 
 ## Editing
 
-- 본문: `index.html`
-- 디자인: `assets/style.css`
+- 메인 홈페이지: `index.html`
+- 상세 페이지: `methods/`
+- 기존 상세 가이드: `adni-guide.html`
+- 디자인: `assets/style.css`, `assets/portal.css`, `assets/detail.css`
 - 메뉴 및 화면 동작: `assets/app.js`

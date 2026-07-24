@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><meta name="description" content="ADNI RS-fMRI 영상 선택, 다운로드, 전처리 방법" /><title>RS-fMRI Data · ADNI Multimodal Data Project</title><link rel="stylesheet" href="../assets/style.css" /><link rel="stylesheet" href="../assets/detail.css" /></head>
+<body class="detail-cyan">
+  <a class="skip-link" href="#main">본문으로 바로가기</a>
+  <header class="site-header"><a class="brand" href="../index.html"><span class="brand-mark">A</span><span class="brand-copy"><strong>ADNI Multimodal Data Project</strong><small>Open methods · Reproducible research</small></span></a><button class="menu-button" id="menuButton" type="button" aria-expanded="false" aria-controls="siteNav"><span></span><span></span><span></span><span class="sr-only">메뉴 열기</span></button><nav class="site-nav" id="siteNav"><a href="../index.html#workflows">Workflows</a><a href="../index.html#resources">Resources</a><a class="nav-cta" href="https://github.com/IDOJI/biostat-lab">GitHub</a></nav></header>
+  <main class="detail-main" id="main">
+    <nav class="method-tabs-shell" aria-label="데이터 섹션">
+      <div class="method-tabs">
+        <a href="subject-history.html"><span>01</span><b>Subject History</b></a>
+        <a class="active" aria-current="page" href="rsfmri-data.html"><span>02</span><b>RS-fMRI Data</b></a>
+        <a href="snp-data.html"><span>03</span><b>SNP Data</b></a>
+      </div>
+    </nav>
+    <section class="detail-hero"><nav class="breadcrumbs"><a href="../index.html">Home</a><span>Methods</span><span>RS-fMRI Data</span></nav><p class="detail-label">02 · RS-fMRI DATA</p><div class="detail-hero-grid"><h1>RS-fMRI<br /><em>데이터</em></h1><div><p class="detail-lead">영상 선택부터 다운로드, 전처리까지 한 흐름으로 정리합니다.</p></div></div></section>
+    <div class="detail-layout">
+      <aside class="detail-toc"><p>이 페이지의 목차</p><a href="#selection">영상 선택과 T1 페어링</a><a href="#download">데이터 다운로드</a><a href="#preprocessing">전처리와 품질관리</a></aside>
+      <div class="detail-content">
+        <section class="detail-section" id="selection">
+          <div class="detail-section-head"><span>01</span><div><p class="detail-label">IMAGE SELECTION</p><h2>영상 선택과 T1 페어링</h2></div></div>
+          <ol class="detail-steps">
+            <li><span>01</span><div><b>후보 수집</b><p>방문별 T1과 resting-state fMRI 후보 및 acquisition 정보를 보존합니다.</p></div></li>
+            <li><span>02</span><div><b>대표 영상 선택</b><p>공식 QC, 프로토콜, 움직임과 영상 품질을 기준으로 대표 스캔을 정합니다.</p></div></li>
+            <li><span>03</span><div><b>같은 방문 연결</b><p>RID, PHASE, VISCODE를 기준으로 T1과 rs-fMRI를 페어링합니다.</p></div></li>
+          </ol>
+          <div class="artifact-box"><span class="overline">OUTPUT</span><h3>selection_log · pairing_summary</h3><p>선택된 image ID, 제외 사유, QC 출처와 최종 페어를 기록합니다.</p></div>
+        </section>
+
+        <section class="detail-section" id="download">
+          <div class="detail-section-head"><span>02</span><div><p class="detail-label">DOWNLOAD</p><h2>데이터 다운로드</h2></div></div>
+          <ul class="detail-list">
+            <li>확정된 image ID 목록과 예상 파일 수를 먼저 고정합니다.</li>
+            <li>승인된 환경에서 자료를 받고 실패 항목을 기록합니다.</li>
+            <li>파일 수, 압축 상태, DICOM/NIfTI 구조와 metadata를 검사합니다.</li>
+            <li>원자료와 접근 정보는 공개 저장소에 포함하지 않습니다.</li>
+          </ul>
+        </section>
+
+        <section class="detail-section" id="preprocessing">
+          <div class="detail-section-head"><span>03</span><div><p class="detail-label">PREPROCESSING &amp; QC</p><h2>전처리와 품질관리</h2></div></div>
+          <div class="detail-pipeline"><span>Convert</span><i>→</i><span>Realignment</span><i>→</i><span>Coregistration</span><i>→</i><span>Normalization</span><i>→</i><span>Regression</span><i>→</i><span>Filtering</span></div>
+          <ul class="detail-list">
+            <li>소프트웨어, 버전, 파라미터와 실패 로그를 기록합니다.</li>
+            <li>framewise displacement, censoring 비율과 유효 volume을 확인합니다.</li>
+            <li>EPI–T1 정합, normalization, brain mask와 시계열을 시각적으로 검토합니다.</li>
+            <li>전처리 영상, 분석용 시계열과 QC 보고서를 산출합니다.</li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer"><div><a class="brand footer-brand" href="../index.html"><span class="brand-mark">A</span><span class="brand-copy"><strong>ADNI Multimodal Data Project</strong></span></a></div><div class="footer-links"><a class="detail-footer-home" href="../index.html">Home</a><a href="../adni-guide.html">통합 가이드</a><a href="https://github.com/IDOJI/biostat-lab">GitHub</a></div><p class="copyright">© <span id="year"></span> · Updated <span id="updatedDate"></span></p></footer>
+  <script src="../assets/app.js"></script>
+</body>
+</html>

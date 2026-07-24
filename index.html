@@ -1,191 +1,130 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="ADNI 데이터 선택, QC, T1/rs-fMRI 페어링 및 전처리 절차를 정리한 연구실 내부 가이드" />
-  <title>ADNI Data Selection Guide</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="ADNI subject history, multimodal imaging, SNP, download, rs-fMRI preprocessing workflow를 공유하는 연구 프로젝트 홈페이지" />
+  <meta property="og:title" content="ADNI Multimodal Data Project" />
+  <meta property="og:description" content="임상 이력부터 영상·유전체 전처리까지, 재현 가능한 ADNI 분석 워크플로" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://idoji.github.io/biostat-lab/assets/og-adni-project.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ADNI Multimodal Data Project" />
+  <meta name="twitter:description" content="재현 가능한 ADNI 멀티모달 데이터 워크플로" />
+  <meta name="twitter:image" content="https://idoji.github.io/biostat-lab/assets/og-adni-project.jpg" />
+  <title>ADNI Multimodal Data Project</title>
   <link rel="stylesheet" href="assets/style.css" />
+  <link rel="stylesheet" href="assets/portal.css" />
 </head>
 <body>
-  <header class="topbar">
-    <a class="brand" href="#top" aria-label="홈으로 이동">
-      <span class="brand-mark">A</span>
-      <span><strong>ADNI Data Guide</strong><small>Lab preprocessing handbook</small></span>
+  <a class="skip-link" href="#main">본문으로 바로가기</a>
+
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="ADNI Multimodal Data Project 홈">
+      <span class="brand-mark" aria-hidden="true">A</span>
+      <span class="brand-copy"><strong>ADNI Multimodal Data Project</strong><small>Open methods · Reproducible research</small></span>
     </a>
-    <button id="menuButton" class="menu-button" type="button" aria-label="메뉴 열기" aria-expanded="false">☰</button>
+    <button class="menu-button" id="menuButton" type="button" aria-expanded="false" aria-controls="siteNav">
+      <span></span><span></span><span></span><span class="sr-only">메뉴 열기</span>
+    </button>
+    <nav class="site-nav" id="siteNav" aria-label="주요 메뉴">
+      <a href="#workflows">Workflows</a>
+      <a href="#resources">Resources</a>
+      <a href="#security">Data policy</a>
+      <a class="nav-cta" href="https://github.com/IDOJI/biostat-lab">GitHub</a>
+    </nav>
   </header>
 
-  <div class="layout" id="top">
-    <aside class="sidebar" id="sidebar">
-      <nav aria-label="주요 목차">
-        <p class="nav-title">START HERE</p>
-        <a href="#overview">Overview</a><a href="#principles">Core principles</a><a href="#workflow">Workflow</a>
-        <p class="nav-title">DATA SELECTION</p>
-        <a href="#visit-history">1. Visit history</a><a href="#candidate-scans">2. Candidate scans</a><a href="#qc">3. Quality control</a><a href="#pairing">4. T1–rs-fMRI pairing</a><a href="#download">5. Download</a>
-        <p class="nav-title">PREPROCESSING</p>
-        <a href="#bids">BIDS organization</a><a href="#rsfmri">rs-fMRI</a><a href="#t1">T1 MRI</a><a href="#outputs">Outputs & QC</a>
-        <p class="nav-title">LAB PRACTICE</p>
-        <a href="#reproducibility">Reproducibility</a><a href="#security">Data security</a><a href="#checklist">Final checklist</a>
-      </nav>
-    </aside>
-
-    <main class="content">
-      <section class="hero" id="overview">
-        <div>
-          <p class="eyebrow">LAB KNOWLEDGE BASE</p>
-          <h1>ADNI 데이터 선택과<br />뇌영상 전처리 가이드</h1>
-          <p class="hero-copy">ADNI의 임상 방문 이력과 MRI 메타데이터를 연결하고, 같은 방문에서 촬영된 T1 MRI와 resting-state fMRI를 선택하여 재현 가능한 분석 데이터셋을 만드는 절차를 정리합니다.</p>
-          <div class="hero-actions"><a class="button primary" href="#workflow">전체 흐름 보기</a><a class="button secondary" href="#checklist">체크리스트</a></div>
+  <div id="top"></div>
+  <main id="main">
+    <section class="hero portal-hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">ADNI DATA METHODS</p>
+        <h1 id="hero-title">ADNI 데이터<br /><em>선택과 전처리</em></h1>
+        <p class="hero-lead">
+          Subject history, RS-fMRI, SNP 데이터의 처리 과정을 정리합니다.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#workflows">방법 보기</a>
         </div>
-        <div class="pipeline-visual" aria-label="ADNI 처리 흐름">
-          <div class="pipeline-node">Clinical visits</div><span>↓</span><div class="pipeline-node">MRI candidates</div><span>↓</span><div class="pipeline-node">QC & pairing</div><span>↓</span><div class="pipeline-node accent">Analysis-ready data</div>
+      </div>
+
+      <div class="hero-visual" aria-label="ADNI 데이터 처리 흐름">
+        <div class="visual-orbit orbit-one"></div>
+        <div class="visual-orbit orbit-two"></div>
+        <div class="visual-core"><span>ADNI</span><strong>Analysis-ready<br />cohort</strong></div>
+        <div class="data-node node-a"><span>01</span><b>History</b><small>subject × visit</small></div>
+        <div class="data-node node-b"><span>02</span><b>RS-fMRI</b><small>selection · preprocessing</small></div>
+        <div class="data-node node-c"><span>03</span><b>SNP</b><small>genotype QC</small></div>
+      </div>
+    </section>
+
+    <section class="portal-workflows" id="workflows">
+      <div class="section-shell">
+        <div class="section-kicker light"><span>METHODS</span><span class="hairline"></span><span>01</span></div>
+        <div class="portal-heading">
+          <h2>데이터별 처리 과정</h2>
         </div>
-      </section>
 
-      <aside class="notice warning"><strong>⚠️ 공개 저장소 주의</strong><p>RID, 날짜, 영상 파일, 다운로드 URL, 접근 토큰, 임상 원자료 등 재식별 가능하거나 접근이 제한된 정보는 이 저장소에 올리지 않습니다.</p></aside>
+        <div class="portal-grid">
+          <a class="portal-card card-history" href="methods/subject-history.html">
+            <div class="portal-card-top"><span>01</span></div>
+            <div class="portal-symbol"><span>RID</span><span>VISIT</span><span>DX</span></div>
+            <div><h3>Subject History</h3><p>방문 이력과 진단 변화를 subject–visit 단위로 정리합니다.</p></div>
+            <em>자세히 보기 <b>→</b></em>
+          </a>
 
-      <section id="principles">
-        <div class="section-heading"><span>00</span><div><p>FOUNDATION</p><h2>핵심 원칙</h2></div></div>
-        <div class="card-grid three">
-          <article class="card"><div class="icon">🧭</div><h3>Visit-first</h3><p>영상부터 고르지 않고, 먼저 대상자의 longitudinal visit history를 구축합니다.</p></article>
-          <article class="card"><div class="icon">✅</div><h3>QC-first</h3><p>Search 결과보다 공식 QC와 영상별 코멘트를 우선하여 대표 스캔을 선택합니다.</p></article>
-          <article class="card"><div class="icon">🔗</div><h3>Same-visit pairing</h3><p>가능하면 동일 RID, phase, visit code의 T1과 rs-fMRI를 페어링합니다.</p></article>
+          <a class="portal-card card-imaging" href="methods/rsfmri-data.html">
+            <div class="portal-card-top"><span>02</span></div>
+            <div class="portal-symbol pair"><span>T1</span><i>+</i><span>rs-fMRI</span></div>
+            <div><h3>RS-fMRI Data</h3><p>영상 선택, 다운로드, 전처리와 품질관리를 설명합니다.</p></div>
+            <em>자세히 보기 <b>→</b></em>
+          </a>
+
+          <a class="portal-card card-snp" href="methods/snp-data.html">
+            <div class="portal-card-top"><span>03</span></div>
+            <div class="portal-symbol bases"><span>A</span><span>C</span><span>G</span><span>T</span></div>
+            <div><h3>SNP Data</h3><p>유전체 품질관리와 영상 코호트 연결 과정을 정리합니다.</p></div>
+            <em>자세히 보기 <b>→</b></em>
+          </a>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section id="workflow">
-        <div class="section-heading"><span>01</span><div><p>PIPELINE</p><h2>전체 작업 흐름</h2></div></div>
-        <ol class="timeline">
-          <li><b>Clinical visit history 구축</b><span>RID별 방문, 진단, 인구학 정보, APOE 등 정리</span></li>
-          <li><b>MRI 후보 목록 생성</b><span>T1과 rs-fMRI 스캔의 image/series metadata 연결</span></li>
-          <li><b>QC 정보 병합</b><span>공식 PASS/FAIL, motion, artifact, comment 반영</span></li>
-          <li><b>방문별 대표 스캔 선택</b><span>사전에 정의한 우선순위로 중복 시퀀스 처리</span></li>
-          <li><b>두 modality 교집합 확정</b><span>같은 방문의 T1–rs-fMRI 페어만 분석 대상으로 유지</span></li>
-          <li><b>다운로드 및 무결성 검사</b><span>파일 수, 압축 해제, DICOM/NIfTI 구조 확인</span></li>
-          <li><b>BIDS 정리와 전처리</b><span>명명 규칙, 로그, QC 결과를 함께 보관</span></li>
-        </ol>
-      </section>
-
-      <section id="visit-history">
-        <div class="section-heading"><span>02</span><div><p>DATA SELECTION</p><h2>1. Clinical visit history</h2></div></div>
-        <p class="lead">목표는 각 RID에 대해 “언제, 어떤 phase에서, 어떤 visit code로 방문했고, 당시 진단과 주요 공변량이 무엇이었는가”를 한 행 단위로 정리하는 것입니다.</p>
-        <div class="split">
-          <article class="card"><h3>권장 키</h3><ul class="check-list"><li><code>RID</code></li><li><code>PHASE</code></li><li><code>VISCODE / VISCODE2</code></li><li>방문일 또는 exam date</li></ul></article>
-          <article class="card"><h3>주요 변수</h3><ul class="check-list"><li>진단 및 진단 변화</li><li>나이, 성별, 교육연수</li><li>APOE genotype</li><li>임상 점수와 연구 단계</li></ul></article>
+    <section class="portal-resources section-shell" id="resources">
+      <div class="section-kicker"><span>RESOURCES</span><span class="hairline"></span><span>02</span></div>
+      <div class="portal-resources-grid">
+        <div><h2>자료</h2></div>
+        <div class="portal-resource-list">
+          <a href="adni-guide.html"><span>01</span><div><b>ADNI 통합 가이드</b></div><em>열기 ↗</em></a>
+          <a href="https://github.com/IDOJI/biostat-lab"><span>02</span><div><b>GitHub</b></div><em>열기 ↗</em></a>
         </div>
-        <aside class="notice info"><strong>VISITS 테이블</strong><p>실제 longitudinal visit 자료가 아니라 visit-code lookup 성격인지 확인하고 사용합니다.</p></aside>
-      </section>
+      </div>
+    </section>
 
-      <section id="candidate-scans">
-        <div class="section-heading"><span>03</span><div><p>DATA SELECTION</p><h2>2. MRI candidate scans</h2></div></div>
-        <p class="lead">한 방문에 같은 modality의 스캔이 여러 개 존재할 수 있으므로, 먼저 후보를 모두 보존한 뒤 선택 규칙을 적용합니다.</p>
-        <div class="table-wrap"><table><thead><tr><th>항목</th><th>확인 내용</th><th>선택에 미치는 영향</th></tr></thead><tbody>
-          <tr><td>Sequence</td><td>MPRAGE, IR-SPGR, resting-state EPI 등</td><td>사전에 허용한 protocol만 유지</td></tr>
-          <tr><td>Repeat</td><td>동일 방문 반복 촬영 여부</td><td>QC가 좋은 repeat를 우선</td></tr>
-          <tr><td>Field strength</td><td>1.5T / 3T</td><td>분석 설계에 따라 제한 또는 공변량 처리</td></tr>
-          <tr><td>Multiband</td><td>MB / non-MB</td><td>혼합 시 protocol 효과를 기록</td></tr>
-          <tr><td>Series metadata</td><td>TR, TE, voxel size, volumes</td><td>극단적 protocol 차이 탐지</td></tr>
-        </tbody></table></div>
-      </section>
-
-      <section id="qc">
-        <div class="section-heading"><span>04</span><div><p>DATA SELECTION</p><h2>3. Quality control</h2></div></div>
-        <div class="decision-box"><p class="eyebrow">DEFAULT DECISION RULE</p><h3>공식 QC PASS → 코멘트 검토 → protocol 적합성 → 대표 이미지 선택</h3></div>
-        <div class="card-grid two">
-          <article class="card"><h3>제외 우선</h3><ul class="check-list bad"><li>Overall QC = FAIL</li><li>심한 motion 또는 ghosting</li><li>불완전한 brain coverage</li><li>잘못된 sequence 또는 orientation</li></ul></article>
-          <article class="card"><h3>우선 선택</h3><ul class="check-list"><li>공식 QC PASS</li><li>motion이 더 작은 run</li><li>완전한 volume 수</li><li>분석 protocol과 일치</li></ul></article>
+    <section class="portal-policy" id="security">
+      <div class="section-shell policy-summary">
+        <div><p class="eyebrow">DATA POLICY</p><h2>공개 범위</h2></div>
+        <div class="policy-mini">
+          <h3>공개하는 것</h3>
+          <p>선택 규칙, 비식별 예제, 재사용 가능한 코드, 버전과 QC 기준</p>
         </div>
-        <aside class="notice info"><strong>Search와 QC가 충돌할 때</strong><p>일반적으로 최종 선택은 QC 테이블과 영상별 코멘트를 우선하되, 모든 예외를 selection log에 기록합니다.</p></aside>
-      </section>
-
-      <section id="pairing">
-        <div class="section-heading"><span>05</span><div><p>DATA SELECTION</p><h2>4. T1–rs-fMRI pairing</h2></div></div>
-        <div class="pairing-diagram"><div class="modality"><b>T1 MRI</b><small>Structural anatomy</small></div><div class="join-key"><span>RID</span><span>PHASE</span><span>VISCODE</span></div><div class="modality"><b>rs-fMRI</b><small>Functional time series</small></div></div>
-        <p class="lead">두 modality 모두 존재하고 QC 기준을 통과한 방문만 최종 분석 코호트에 포함합니다. 촬영일 차이가 허용되는 경우에는 허용 범위를 사전에 명시합니다.</p>
-      </section>
-
-      <section id="download">
-        <div class="section-heading"><span>06</span><div><p>DATA SELECTION</p><h2>5. Download & integrity check</h2></div></div>
-        <div class="card-grid three"><article class="card"><h3>Before</h3><p>대상 series/image ID 목록을 고정하고 selection version을 부여합니다.</p></article><article class="card"><h3>During</h3><p>재시도 가능한 다운로드 방식을 사용하고 실패 URL을 별도 기록합니다.</p></article><article class="card"><h3>After</h3><p>예상 파일 수, 용량, 압축 상태, 누락 여부를 검사합니다.</p></article></div>
-      </section>
-
-      <section id="bids">
-        <div class="section-heading"><span>07</span><div><p>PREPROCESSING</p><h2>BIDS organization</h2></div></div>
-        <pre class="code-tree"><code>dataset/
-├── dataset_description.json
-├── participants.tsv
-├── sub-XXXX/
-│   └── ses-M00/
-│       ├── anat/
-│       │   └── sub-XXXX_ses-M00_T1w.nii.gz
-│       └── func/
-│           ├── sub-XXXX_ses-M00_task-rest_bold.nii.gz
-│           └── sub-XXXX_ses-M00_task-rest_bold.json
-└── derivatives/</code></pre>
-        <p class="lead">원본 데이터와 전처리 산출물은 분리합니다. BIDS 이름에는 직접식별정보를 넣지 않고, ADNI RID와 내부 subject ID의 매핑은 접근 제한 위치에 보관합니다.</p>
-      </section>
-
-      <section id="rsfmri">
-        <div class="section-heading"><span>08</span><div><p>PREPROCESSING</p><h2>rs-fMRI preprocessing</h2></div></div>
-        <div class="steps-row"><span>Convert</span><span>Discard volumes</span><span>Slice timing</span><span>Realignment</span><span>Coregistration</span><span>Normalization</span><span>Nuisance regression</span><span>Filtering</span><span>Smoothing</span></div>
-        <p class="lead">사용 도구와 설정에 따라 일부 단계의 순서는 달라질 수 있습니다. 가장 중요한 것은 software version, parameter, censoring 기준을 기록하는 것입니다.</p>
-        <div class="card-grid two">
-          <article class="card"><h3>필수 QC 지표</h3><ul class="check-list"><li>Framewise displacement</li><li>Head motion summary</li><li>Temporal coverage</li><li>Normalization overlay</li></ul></article>
-          <article class="card"><h3>분석 전 확인</h3><ul class="check-list"><li>TR과 volume 수</li><li>Motion censoring 비율</li><li>Global/WM/CSF 처리 방식</li><li>Smoothing kernel</li></ul></article>
+        <div class="policy-mini danger">
+          <h3>공개하지 않는 것</h3>
+          <p>원본 영상, 임상 원자료, RID 결합표, 계정·토큰·다운로드 URL</p>
         </div>
-      </section>
+      </div>
+    </section>
+  </main>
 
-      <section id="t1">
-        <div class="section-heading"><span>09</span><div><p>PREPROCESSING</p><h2>T1 MRI preprocessing</h2></div></div>
-        <div class="steps-row compact"><span>Reorientation</span><span>Bias correction</span><span>Skull stripping</span><span>Segmentation</span><span>Surface reconstruction</span><span>Spatial normalization</span></div>
-        <p class="lead">T1은 rs-fMRI의 해부학적 기준 영상이며, cortical thickness, volume, tissue mask 또는 registration reference로 사용됩니다.</p>
-      </section>
-
-      <section id="outputs">
-        <div class="section-heading"><span>10</span><div><p>PREPROCESSING</p><h2>Outputs & visual QC</h2></div></div>
-        <div class="table-wrap"><table><thead><tr><th>산출물</th><th>검사</th><th>판정 예시</th></tr></thead><tbody>
-          <tr><td>Realigned BOLD</td><td>motion plot, carpet plot</td><td>과도한 spike 여부</td></tr>
-          <tr><td>Coregistered image</td><td>EPI–T1 overlay</td><td>뇌 경계의 정렬</td></tr>
-          <tr><td>Normalized image</td><td>MNI template overlay</td><td>비정상적 deformation 여부</td></tr>
-          <tr><td>Brain mask</td><td>coverage 확인</td><td>뇌 조직 누락 여부</td></tr>
-          <tr><td>ROI time series</td><td>분포와 결측 확인</td><td>0-variance ROI 탐지</td></tr>
-        </tbody></table></div>
-      </section>
-
-      <section id="reproducibility">
-        <div class="section-heading"><span>11</span><div><p>LAB PRACTICE</p><h2>Reproducibility</h2></div></div>
-        <div class="card-grid three"><article class="card"><h3>Version</h3><p>selection 기준, 코드, atlas, software와 container version을 고정합니다.</p></article><article class="card"><h3>Log</h3><p>제외 사유와 수동 판단을 사람이 읽을 수 있는 표로 남깁니다.</p></article><article class="card"><h3>Review</h3><p>대표 영상 선택 규칙과 예외 사례를 다른 연구자가 재검토합니다.</p></article></div>
-        <pre class="code-tree"><code>logs/
-├── selection_log.csv
-├── excluded_scans.csv
-├── pairing_summary.csv
-├── preprocessing_versions.txt
-└── qc_review_notes.md</code></pre>
-      </section>
-
-      <section id="security">
-        <div class="section-heading"><span>12</span><div><p>LAB PRACTICE</p><h2>Data security</h2></div></div>
-        <div class="notice danger"><strong>GitHub에 올리면 안 되는 것</strong><ul><li>원본 DICOM/NIfTI 및 임상 원자료</li><li>ADNI 로그인 정보, API token, cookie, 다운로드 URL</li><li>RID와 민감한 임상정보가 결합된 표</li><li>로컬 경로에 포함된 개인 이름 또는 기관 내부 서버 주소</li></ul></div>
-      </section>
-
-      <section id="checklist">
-        <div class="section-heading"><span>13</span><div><p>FINAL REVIEW</p><h2>최종 체크리스트</h2></div></div>
-        <div class="checklist-panel">
-          <label><input type="checkbox" /> 방문 이력이 RID별로 중복 없이 정리되었는가?</label>
-          <label><input type="checkbox" /> 각 영상의 QC 출처와 판정 기준이 기록되었는가?</label>
-          <label><input type="checkbox" /> 동일 방문의 T1–rs-fMRI 페어만 유지했는가?</label>
-          <label><input type="checkbox" /> 반복 촬영 중 대표 스캔 선택 규칙이 일관적인가?</label>
-          <label><input type="checkbox" /> 다운로드 누락과 파일 손상을 검사했는가?</label>
-          <label><input type="checkbox" /> 전처리 software와 parameter version을 기록했는가?</label>
-          <label><input type="checkbox" /> 시각적 QC가 독립적으로 검토되었는가?</label>
-          <label><input type="checkbox" /> 공개 저장소에 제한 자료가 포함되지 않았는가?</label>
-        </div>
-      </section>
-
-      <footer><p><strong>ADNI Data Selection Guide</strong></p><p>연구실 구성원이 함께 수정하는 살아 있는 문서입니다.</p><p class="muted">Last updated: <span id="updatedDate"></span></p></footer>
-    </main>
-  </div>
+  <footer class="site-footer">
+    <div>
+      <a class="brand footer-brand" href="#top"><span class="brand-mark">A</span><span class="brand-copy"><strong>ADNI Multimodal Data Project</strong><small>Open methods · Reproducible research</small></span></a>
+      <p>ADNI 임상·영상·유전체 데이터 처리 과정을 공유하는 연구 프로젝트 홈페이지입니다.</p>
+    </div>
+    <div class="footer-links"><a href="#workflows">Workflows</a><a href="#resources">Resources</a><a href="#security">Data policy</a><a href="https://github.com/IDOJI/biostat-lab">GitHub</a></div>
+    <p class="copyright">© <span id="year"></span> ADNI Multimodal Data Project · Updated <span id="updatedDate"></span></p>
+  </footer>
   <script src="assets/app.js"></script>
 </body>
 </html>
